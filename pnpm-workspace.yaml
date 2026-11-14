@@ -1,0 +1,13 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+allowBuilds:
+  esbuild: true
+minimumReleaseAgeExclude:
+  - '@payloadcms/db-postgres@4.0.0-beta.9'
+  - '@payloadcms/drizzle@4.0.0-beta.9'
+  - '@payloadcms/graphql@4.0.0-beta.9'
+  - '@payloadcms/next@4.0.0-beta.9'
+  - '@payloadcms/translations@4.0.0-beta.9'
+  - '@payloadcms/ui@4.0.0-beta.9'
+  - payload@4.0.0-beta.9
