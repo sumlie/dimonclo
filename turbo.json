@@ -13,7 +13,8 @@
       "outputs": [
         ".next/**",
         "!.next/cache/**",
-        "!.next/dev/**"
+        "!.next/dev/**",
+        "dist/**"
       ]
     },
     "lint": {
@@ -28,7 +29,10 @@
     },
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "passThroughEnv": [
+        "BOT_TOKEN"
+      ]
     }
   },
   "globalEnv": [

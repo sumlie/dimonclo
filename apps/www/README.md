@@ -2,4 +2,6 @@
 
 Next.js frontend and Payload CMS backed by PostgreSQL.
 
-See the [root README](../../README.md) for setup and commands and the [architecture guide](../../docs/architecture.md) for directory and dependency conventions.
+The application follows FSD, with Payload collections owned by their entities and layout implementations in `src/app/layouts`. The root `app/` directory contains framework entry points and Payload's generated admin import map.
+
+See the [architecture guide](../../docs/architecture.md) for directory and dependency conventions.

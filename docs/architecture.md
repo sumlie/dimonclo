@@ -68,7 +68,7 @@ Never re-export Payload runtime configuration through a browser-facing barrel. P
 
 ## Bot boundary
 
-The future `apps/bot` will use NestJS modules and grammY, not React's FSD layers. It must not import `apps/www` source files. Extract framework-independent DTOs or event schemas into a shared workspace package when the first integration requires them. Payload credentials and configuration stay inside `www`.
+`apps/bot` uses NestJS modules and grammY, with an application context rather than an HTTP server. Nest owns initialization and shutdown of the long-polling bot. Bot features follow the NestJS module structure rather than React's FSD layers. It must not import `apps/www` source files. Extract framework-independent DTOs or event schemas into a shared workspace package when the first integration requires them. Payload credentials and configuration stay inside `www`.
 
 ## References
 

@@ -39,3 +39,8 @@ actually contributed to that commit.
   a task explicitly requires changes to those adapters.
 - Never manually edit Payload's generated `app/(payload)/admin/importMap.js`;
   use `generate:importmap` to regenerate it when required.
+
+## Documentation
+
+Keep README files focused on project purpose, structure, and architecture. Do not
+include installation, startup, or launch instructions in README files.
