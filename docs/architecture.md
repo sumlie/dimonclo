@@ -38,7 +38,7 @@ apps/www/
       ui/
 ```
 
-Empty layers are reserved locations, not a requirement to extract code before it has a use case. There are no products, orders, customer accounts, or checkout features yet.
+Empty layers are reserved locations, not a requirement to extract code before it has a use case. Minimal collection schemas exist for products, orders, categories, media, folders, promocodes, customers, and Markdown pages. Entity directories use singular names. Orders currently contain only Payload IDs and timestamps; customers are records rather than login accounts. Checkout, pricing, discounts, and frontend Markdown rendering are not implemented.
 
 ## Dependency rules
 
@@ -51,6 +51,10 @@ Slices on the same layer are independent. Use each slice's public entry point ra
 Entity-specific API logic belongs in `entities/<entity>/api`. Generic API infrastructure unrelated to an entity belongs in `shared/api`. Root route files re-export these handlers where appropriate; higher-level business use cases stay in their owning FSD layer.
 
 ## Payload follows domain ownership
+
+The application registers eight shop collections alongside the existing CMS staff users. Initial CRUD access is limited to the `users` auth collection; customer records do not grant CMS access. Public reads and customer-specific permissions will be added with the corresponding use cases.
+
+`folders` uses Payload 4's folder hierarchy preset. `media` references it with Payload's `createFolderField`, and image uploads are stored in the ignored `apps/www/uploads/media` directory. This directory is runtime data and must persist independently of application builds. Pages store Markdown as plain text; route rendering is a separate feature.
 
 A collection belongs in `entities/<entity>/payload`. Its fields, entity-specific access rules, hooks, and admin components stay in that slice. Cross-entity use cases belong in `features`; registration of collections and cross-domain orchestration belong in `src/app`. Do not make an entity hook import a feature or the root Payload config, which would invert dependencies and create configuration cycles. Hooks can use the request's Payload instance; application composition can inject higher-level behavior where necessary.
 

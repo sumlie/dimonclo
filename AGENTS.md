@@ -28,6 +28,9 @@ actually contributed to that commit.
 
 ## Next.js and FSD boundaries
 
+- Name entity directories in the singular (`product`, `order`, `category`,
+  `folder`, `promocode`, `customer`, `page`); collection slugs may be plural.
+
 - Keep `apps/www/app/` route files (`page`, `layout`, and `route`) as thin
   entry points, normally only re-exporting implementations from `src/`.
 - Store layout implementations in `apps/www/src/app/layouts/`. Keep page
