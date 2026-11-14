@@ -30,6 +30,16 @@ export const config = [
     },
   },
   {
+    files: ["**/*.{tsx,jsx}"],
+    languageOptions: {
+      parserOptions: {
+        babelOptions: {
+          parserOpts: { plugins: ["jsx"] },
+        },
+      },
+    },
+  },
+  {
     plugins: {
       onlyWarn,
     },
