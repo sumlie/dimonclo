@@ -8,5 +8,9 @@ export const metadata: Metadata = {
 };
 
 export function FrontendLayout({ children }: { children: ReactNode }) {
-  return <html lang="ru"><body>{children}</body></html>;
+  return (
+    <html lang="ru">
+      <body>{children}</body>
+    </html>
+  );
 }
