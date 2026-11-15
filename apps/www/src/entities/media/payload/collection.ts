@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createFolderField, createTagField } from 'payload';
+import { createFolderField } from 'payload';
 import type { CollectionConfig } from 'payload';
 import { authenticatedCollectionAccess } from '@/shared/api/payload/access';
 
@@ -27,7 +27,6 @@ export const Media: CollectionConfig = {
   },
   fields: [
     { name: 'alt', type: 'text' },
-    createTagField({ relationTo: 'tags' }),
     folderField,
   ],
 };

@@ -151,7 +151,6 @@ export interface Config {
     categories: Category;
     media: Media;
     folders: Folder;
-    tags: Tag;
     'promo-codes': PromoCode;
     customers: Customer;
     'customer-identities': CustomerIdentity;
@@ -174,7 +173,6 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     folders: FoldersSelect<false> | FoldersSelect<true>;
-    tags: TagsSelect<false> | TagsSelect<true>;
     'promo-codes': PromoCodesSelect<false> | PromoCodesSelect<true>;
     customers: CustomersSelect<false> | CustomersSelect<true>;
     'customer-identities': CustomerIdentitiesSelect<false> | CustomerIdentitiesSelect<true>;
@@ -463,7 +461,6 @@ export interface Product {
 export interface Media {
   id: number;
   alt?: string | null;
-  _h_tags?: (number | Tag)[] | null;
   _h_folders?: (number | null) | Folder;
   createdBy?:
     | ({
@@ -507,37 +504,6 @@ export interface Media {
   };
   focalX?: number | null;
   focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "tags".
- */
-export interface Tag {
-  id: number;
-  _h_tags?: (number | null) | Tag;
-  name: string;
-  createdBy?:
-    | ({
-        relationTo: 'users';
-        value: number | User;
-      } | null)
-    | ({
-        relationTo: 'customers';
-        value: number | Customer;
-      } | null);
-  updatedBy?:
-    | ({
-        relationTo: 'users';
-        value: number | User;
-      } | null)
-    | ({
-        relationTo: 'customers';
-        value: number | Customer;
-      } | null);
-  updatedAt: string;
-  createdAt: string;
-  _h_slugPath?: string | null;
-  _h_titlePath?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -839,10 +805,6 @@ export interface PayloadLockedDocument {
         value: number | Folder;
       } | null)
     | ({
-        relationTo: 'tags';
-        value: number | Tag;
-      } | null)
-    | ({
         relationTo: 'promo-codes';
         value: number | PromoCode;
       } | null)
@@ -1071,7 +1033,6 @@ export interface CategoriesSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
-  _h_tags?: T;
   _h_folders?: T;
   createdBy?: T;
   updatedBy?: T;
@@ -1108,20 +1069,6 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface FoldersSelect<T extends boolean = true> {
   _h_folders?: T;
-  name?: T;
-  createdBy?: T;
-  updatedBy?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _h_slugPath?: T;
-  _h_titlePath?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "tags_select".
- */
-export interface TagsSelect<T extends boolean = true> {
-  _h_tags?: T;
   name?: T;
   createdBy?: T;
   updatedBy?: T;
@@ -1532,7 +1479,6 @@ export interface CollectionQueryWidget {
       | 'categories'
       | 'media'
       | 'folders'
-      | 'tags'
       | 'promo-codes'
       | 'customers'
       | 'customer-identities'
@@ -1566,7 +1512,6 @@ export interface ActivityWidget {
           | 'categories'
           | 'media'
           | 'folders'
-          | 'tags'
           | 'promo-codes'
           | 'customers'
           | 'customer-identities'

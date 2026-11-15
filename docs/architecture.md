@@ -35,7 +35,6 @@ apps/www/
       page/
       product/
       promocode/
-      tag/
       user/                    CMS staff, separate from customers
     shared/
       api/
@@ -122,7 +121,7 @@ The root `modules/` directory is the original reference snapshot. Active code im
 
 The imported `promo-codes` slug is retained, matching checkout's PostgreSQL `promo_codes` table. This differs from the initial placeholder collection `promocodes`. Product/category titles and the rest of the domain fields now follow the imported schemas. This is a source migration, not an executed data conversion: existing placeholder data or an old production database needs a separately reviewed database migration before deployment.
 
-Media retains the imported bulk upload support and visible folder picker, and preserves the current persistent `apps/www/uploads/media` location, image MIME restriction, `alt` field and Payload folder integration. The imported tag relationship is backed by an explicit `tag` entity using Payload 4's tag hierarchy preset. Uploads are runtime data and must persist independently of builds.
+Media retains the imported bulk upload support and visible folder picker, and preserves the current persistent `apps/www/uploads/media` location, image MIME restriction, `alt` field and Payload folder integration. The imported tag relationship was dropped; media keeps only the `alt` field and folder relation. Uploads are runtime data and must persist independently of builds.
 
 Frontend account, onboarding and checkout pages were not part of the imported modules; the imported redirects to `/account` and `/auth/complete` remain integration contracts for those pages. External OAuth, CDEK and notification services require their respective environment configuration. `.env.example` lists the configuration surface without secrets.
 
