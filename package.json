@@ -4,9 +4,11 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "lint": "pnpm format:check && turbo run lint",
+    "format": "prettier --write .",
+    "check-types": "turbo run check-types",
+    "lint:fix": "pnpm -r --if-present run lint --fix && pnpm format",
+    "format:check": "prettier --check ."
   },
   "devDependencies": {
     "prettier": "3.9.6",

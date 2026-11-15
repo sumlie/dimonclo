@@ -1,0 +1,17 @@
+node_modules/
+**/.next/
+**/.turbo/
+**/dist/
+**/build/
+**/out/
+**/coverage/
+apps/www/uploads/
+apps/www/next-env.d.ts
+# Existing Payload framework adapters remain untouched.
+apps/www/app/(payload)/admin/**/page.tsx
+apps/www/app/(payload)/api/**/route.ts
+apps/www/src/shared/api/payload-types.ts
+apps/www/app/(payload)/admin/importMap.js
+pnpm-lock.yaml
+# Original reference snapshot, excluded from the active application.
+modules/

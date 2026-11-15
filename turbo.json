@@ -3,41 +3,47 @@
   "ui": "tui",
   "tasks": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        ".env*"
-      ],
-      "outputs": [
-        ".next/**",
-        "!.next/cache/**",
-        "!.next/dev/**",
-        "dist/**"
-      ]
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**", "dist/**"]
     },
     "lint": {
-      "dependsOn": [
-        "^lint"
-      ]
+      "dependsOn": ["^lint"]
     },
     "check-types": {
-      "dependsOn": [
-        "^check-types"
-      ]
+      "dependsOn": ["^check-types"]
     },
     "dev": {
       "cache": false,
       "persistent": true,
-      "passThroughEnv": [
-        "BOT_TOKEN"
-      ]
+      "passThroughEnv": ["BOT_TOKEN"]
     }
   },
   "globalEnv": [
     "DATABASE_URL",
     "PAYLOAD_SECRET",
-    "NODE_ENV"
+    "NODE_ENV",
+    "APP_URL",
+    "ADMIN_URL",
+    "COOKIE_DOMAIN",
+    "OAUTH_SESSION_SECRET",
+    "TRUSTED_REDIRECT_ORIGINS",
+    "TELEGRAM_AUTH_MAX_AGE",
+    "GOOGLE_CLIENT_ID",
+    "GOOGLE_CLIENT_SECRET",
+    "GOOGLE_REDIRECT_URI",
+    "YANDEX_CLIENT_ID",
+    "YANDEX_CLIENT_SECRET",
+    "YANDEX_REDIRECT_URI",
+    "TELEGRAM_BOT_TOKEN",
+    "TELEGRAM_BOT_USERNAME",
+    "CDEK_CLIENT_ID",
+    "CDEK_CLIENT_SECRET",
+    "CDEK_TARIFF_CODE",
+    "CDEK_BOX_XS_LENGTH_CM",
+    "CDEK_BOX_XS_WIDTH_CM",
+    "CDEK_BOX_XS_HEIGHT_CM",
+    "NOTIFY_SERVICE_URL",
+    "NOTIFY_API_KEY"
   ]
 }
