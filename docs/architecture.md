@@ -2,80 +2,134 @@
 
 ## One application, two interfaces
 
-`apps/www` runs the frontend and Payload admin/API in one Next.js process. Payload is server-side software; the frontend can use Next.js server components or access Payload through HTTP from the browser. A separate CMS application is unnecessary.
+`apps/www` contains the storefront and Payload admin/API in one Next.js application. PostgreSQL stores the CMS data. `apps/bot` remains an independent NestJS application and must not import the website's source files.
 
-The root `app/` directory contains thin framework adapters. Application-owned `page`, `layout`, and `route` files only re-export implementations from `src/`; layouts live in `src/app/layouts`. Keep the existing Payload admin page and REST adapters as framework integration exceptions. Never manually edit the generated Payload import map. Frontend and Payload have separate route groups and root layouts. The Payload stylesheet and layout do not wrap the frontend.
+The root `app/` directory holds thin Next.js adapters. Page and layout implementations live in `src/`. Payload's existing admin page and REST adapters remain framework integration exceptions. The admin import map and `src/shared/api/payload-types.ts` are generated artifacts; never edit either manually.
 
 ```text
 apps/www/
   app/
-    (frontend)/            Frontend route and layout re-exports
-    (payload)/
-      admin/                Payload admin adapter + generated import map
-      api/[...slug]/        Payload REST API
-      layout.tsx            Payload layout re-export
-  payload.config.ts         CLI entry point, re-exports app configuration
+    (frontend)/
+      api/auth/[...segments]/route.ts
+      api/checkout/route.ts
+    (payload)/                 Existing Payload adapters and import map
+  payload.config.ts            CLI entry point
   src/
     app/
-      config/payload.ts     Composition: collections, database, plugins
-      layouts/              Frontend and Payload layouts + server functions
-      migrations/           Database migrations
-      styles/               Frontend global styles
-    views/                  FSD pages layer, named to avoid Next.js pages router
+      config/
+        payload.ts             Collection/global/view registration and database
+        globals/               Home page, legal, social, delivery settings
+      layouts/                 Frontend and Payload root layouts
+      migrations/              Reviewed database migrations
+    views/
       home/
-        ui/home-page.tsx
-        index.ts
-    widgets/
     features/
+      auth/                    Login, linking, onboarding, logout, profile HTTP API
+      checkout/                Transaction orchestration, delivery and totals
     entities/
-      user/
-        payload/
-          collection.ts     CMS staff collection + entity-specific access/hooks
-          index.ts          Explicit Payload entry point
+      category/
+      customer/                Customer profiles, identities and social sessions
+      folder/
+      media/
+      order/
+      page/
+      product/
+      promocode/
+      tag/
+      user/                    CMS staff, separate from customers
     shared/
-      api/                  Generated Payload types and infrastructure types
-      lib/
-      ui/
+      api/
+        cdek/                  External delivery client and quote cache
+        notifications/         External order notification transport
+        oauth/                 Google/Yandex clients and Telegram verification
+        order-admin/           Order admin data access helpers
+        order-statistics/      Order statistics data access
+        payload/               Request bootstrap, field endpoints and access helpers
+        payload-types.ts       Generated schema types
+      config/auth.ts           Provider, origin, cookie and secret configuration
+      lib/                     Focused formatting, order presentation, status and auth-error utilities
+      ui/order-admin/          Order admin view components
+      ui/order-statistics/     Order statistics view components
+      ui/payload/              Reusable CMS controls and presentation primitives
 ```
 
-Empty layers are reserved locations, not a requirement to extract code before it has a use case. Minimal collection schemas exist for products, orders, categories, media, folders, promocodes, customers, and Markdown pages. Entity directories use singular names. Orders currently contain only Payload IDs and timestamps; customers are records rather than login accounts. Checkout, pricing, discounts, and frontend Markdown rendering are not implemented.
+## Dependency direction and ownership
 
-## Dependency rules
+Imports flow downward: `app → views → widgets → features → entities → shared`. `views` is the FSD pages layer, named to avoid Next.js Pages Router conventions. Layers without a use case can remain empty.
 
-Imports flow downward: `app → views → widgets → features → entities → shared`. Root Next.js adapters may import the app composition or the public API of a page. The ESLint configuration checks upward imports written with the `@/` alias. Use this alias for imports between layers; relative imports are reserved for files inside a slice. The current check does not enforce slice isolation or all transitive client/server boundaries.
+Entity directories are singular; collection slugs remain plural. Each collection belongs to its entity's `payload/` entry point. Its hooks, access policies and field groups live beside the collection. Entity-specific custom endpoints and database operations belong in `entities/<entity>/api`. Collection relationships reference Payload slugs, without importing another collection's runtime configuration.
 
-Slices on the same layer are independent. Use each slice's public entry point rather than importing its internals. Collection relationships should normally reference Payload slugs, not import another collection's runtime configuration. If a domain relationship needs shared types, use explicit type-only APIs; document intentional FSD `@x` exceptions.
+Slices on the same layer are independent. Use public `server.ts` entry points for runtime operations across slices and `payload/index.ts` for schema composition. Import generated domain types using `import type`; do not maintain parallel copies of the order or product schema. Relative imports stay within a slice; cross-layer imports use `@/` aliases.
 
-`views` is the FSD pages layer. This name prevents Next.js from interpreting `src/pages` as its Pages Router. Root `app/` is framework routing; `src/app/` is FSD application composition.
+Server entry points use `import 'server-only'`. Collection configuration and its dependencies must remain compatible with Payload's CLI, which runs outside Next.js. In particular, the customer session strategy is imported directly by the customer collection rather than through its guarded runtime entry point.
 
-Entity-specific API logic belongs in `entities/<entity>/api`. Generic API infrastructure unrelated to an entity belongs in `shared/api`. Root route files re-export these handlers where appropriate; higher-level business use cases stay in their owning FSD layer.
+`shared/api/payload/request.ts` is the infrastructure bootstrap boundary. It lazily resolves `@payload-config` when a Next.js request needs a Payload instance. The lazy import prevents collection configuration from depending on a runtime feature or initializing Payload recursively. Request URLs and authenticated users are preserved on the resulting Payload request.
 
-## Payload follows domain ownership
+The ESLint configuration checks upward imports written with the `@/` alias. It does not currently enforce every same-layer slice dependency or transitive client/server boundary.
 
-The application registers eight shop collections alongside the existing CMS staff users. Initial CRUD access is limited to the `users` auth collection; customer records do not grant CMS access. Public reads and customer-specific permissions will be added with the corresponding use cases.
+## Auth and checkout
 
-`folders` uses Payload 4's folder hierarchy preset. `media` references it with Payload's `createFolderField`, and image uploads are stored in the ignored `apps/www/uploads/media` directory. This directory is runtime data and must persist independently of application builds. Pages store Markdown as plain text; route rendering is a separate feature.
+Authentication is a business feature rather than a general Shared service. `features/auth` owns sign-in, registration, onboarding, linking and unlinking. Customer persistence, identities and session verification belong to the customer entity. Provider protocol clients, cookies, origin configuration and error infrastructure are reusable lower-level code.
 
-A collection belongs in `entities/<entity>/payload`. Its fields, entity-specific access rules, hooks, and admin components stay in that slice. Cross-entity use cases belong in `features`; registration of collections and cross-domain orchestration belong in `src/app`. Do not make an entity hook import a feature or the root Payload config, which would invert dependencies and create configuration cycles. Hooks can use the request's Payload instance; application composition can inject higher-level behavior where necessary.
+CMS staff retain the `users` slug. Imported checks for the former `admins` collection now target `users`. Customers explicitly cannot enter the CMS or perform staff mutations. Orders can be read by staff or their unblocked owner; only staff can change order workflow fields and admin notes. Products and pages expose published records publicly. Promo codes and identity mutations remain restricted.
 
-Payload blocks represent either entity content or reusable composed content. Place them according to their actual domain responsibility rather than maintaining a global directory of every collection and block. Globals follow the same rule: domain-owned globals stay in their slice; site-wide configuration is composed in `app`.
+Social-session cookies use `/api`, allowing both auth and checkout requests to receive them. The strategy accepts only `/api/auth` endpoints and `/api/checkout`, and never authenticates a staff route. Logout expires both the current cookie scope and previous `/` and `/api/auth` scopes. Server-side session records remain authoritative, so revocation and blocking invalidate a signed token.
 
-Keep separate entry points as slices grow:
+The auth route exposes these methods relative to `/api/auth`:
 
-- `index.ts`: browser-safe UI, pure models, and type-only exports.
-- `server.ts`: runtime server queries/services, protected with `import 'server-only'`.
-- `payload/index.ts`: collection/global configuration, imported only by application composition.
+| Method    | Path                                    | Responsibility                              |
+| --------- | --------------------------------------- | ------------------------------------------- |
+| GET       | `/google/start`, `/yandex/start`        | Begin OAuth login or account linking        |
+| GET       | `/google/callback`, `/yandex/callback`  | Complete OAuth flow                         |
+| GET       | `/telegram/start`, `/telegram/callback` | Telegram widget flow                        |
+| GET       | `/me`, `/links`                         | Current customer and linked identities      |
+| GET, POST | `/onboarding`                           | Read pending profile or finish registration |
+| PATCH     | `/profile`                              | Update customer profile                     |
+| POST      | `/logout`                               | Revoke session and clear cookies            |
+| DELETE    | `/links/:provider`                      | Unlink an external identity                 |
 
-Never re-export Payload runtime configuration through a browser-facing barrel. Payload CLI commands execute outside Next.js, so collection configuration itself must remain CLI-compatible and must not import the `server-only` runtime guard. Use that guard on Next.js runtime services instead.
+`POST /api/checkout` validates input before opening a transaction. It coordinates customer locking, stock reservation, promo-code locking and usage, delivery pricing, minor-unit totals, order persistence and optional profile updates. Stock and promo operations stay inside the same PostgreSQL transaction. Failures roll back; notification delivery occurs after commit and cannot undo a successful order. Both RUB and BYN discount amounts are persisted.
 
-`src/shared/api/payload-types.ts` is generated by Payload and should be committed after schema changes. It is the intentional generated schema dependency for the application; import it with `import type`. Do not edit it manually. Regenerate the admin import map when adding custom admin components. Payload also registers built-in admin components, so generate the map even without custom components.
+The delivery client separates token management and HTTP transport from quote calculation. Quote cache keys include exact shipment weight and sender location. The notification adapter preserves the imported external `notify.sendOrder` contract; it does not imply that the current bot exposes that service.
 
-## Bot boundary
+## Source formatting
 
-`apps/bot` uses NestJS modules and grammY, with an application context rather than an HTTP server. Nest owns initialization and shutdown of the long-polling bot. Bot features follow the NestJS module structure rather than React's FSD layers. It must not import `apps/www` source files. Extract framework-independent DTOs or event schemas into a shared workspace package when the first integration requires them. Payload credentials and configuration stay inside `www`.
+Prettier owns indentation, wrapping and quotes, configured at the repository root with two spaces and single quotes. ESLint Stylistic requires blank lines after imports and directives, around functions, classes, types and exported declarations, before returns, around control-flow statements, and after variable groups. Multiline declarations are separated from adjacent statements; consecutive short variable declarations can stay grouped. Conditionals and loops require braces. Re-export barrels can stay compact. These rules apply through the shared ESLint configuration across the applications and UI package.
+
+Root lint checks formatting before checking code. The fix script applies ESLint fixes in each workspace and then runs Prettier. The original `modules/` snapshot, generated artifacts, existing Payload framework adapters and build outputs are excluded from formatting. The Payload adapters still receive the existing code-quality lint checks.
+
+## Runtime validation
+
+Zod is a direct dependency of the website. Schemas belong to the slice or integration that owns the input contract:
+
+- `features/checkout/model/schema.ts` defines checkout input, normalization, duplicate-item checks and delivery-field combinations. Request types are inferred from these schemas rather than maintained separately.
+- `features/auth/model/schemas.ts` defines onboarding and profile requests. The HTTP adapter converts malformed JSON and schema failures to the existing auth error codes and HTTP 400 responses. Service-level name/email validation uses the same field schemas.
+- `shared/api/cdek/schemas.ts` validates consumed token, pickup-point and tariff response fields. Invalid unrelated list entries are skipped; missing required response fields cannot become a usable quote.
+
+Use schema parsing at untrusted input boundaries. Keep stock availability, permissions, promo-code usage and database locking in their owning services and transactions. Payload field validators and generated document types continue to describe stored records; request schemas do not replace them. Unknown request fields are stripped, numeric input is not coerced, and schema issue paths are available for future form error presentation. Existing HTTP error envelopes are preserved.
+
+## Globals and Payload UI
+
+A Payload global is a CMS storage mechanism, not an FSD layer. The current globals represent application configuration, and the home-page global relates to products. They are composed in `app/config/globals`, above Entities, rather than introducing a business settings module in Shared. All four globals allow public reads and staff-only updates. If a global develops independent domain behavior, move it into an appropriate entity slice.
+
+`shared/ui/payload` holds reusable editable number/select cells, status controls, sections and visual tokens. Product photos and order-item cells are entity-specific. Order detail and statistics screens belong to `views` because they compose several concerns. Custom view references in configuration are Payload component-path strings, not runtime imports from Entities into Views. Paths are relative to the configured application base directory and begin with `/src/`.
+
+The statistics view separates period boundaries, paginated aggregation and presentation. The order detail view separates header/status controls, payment summary, customer/delivery details and admin-note editing. Collection field groups are organized by responsibility, rather than extracting one file for every field.
+
+## Imported source and data compatibility
+
+The root `modules/` directory is the original reference snapshot. Active code imports nothing from it. It is preserved for comparison and is outside the website's TypeScript project.
+
+The imported `promo-codes` slug is retained, matching checkout's PostgreSQL `promo_codes` table. This differs from the initial placeholder collection `promocodes`. Product/category titles and the rest of the domain fields now follow the imported schemas. This is a source migration, not an executed data conversion: existing placeholder data or an old production database needs a separately reviewed database migration before deployment.
+
+Media retains the imported bulk upload support and visible folder picker, and preserves the current persistent `apps/www/uploads/media` location, image MIME restriction, `alt` field and Payload folder integration. The imported tag relationship is backed by an explicit `tag` entity using Payload 4's tag hierarchy preset. Uploads are runtime data and must persist independently of builds.
+
+Frontend account, onboarding and checkout pages were not part of the imported modules; the imported redirects to `/account` and `/auth/complete` remain integration contracts for those pages. External OAuth, CDEK and notification services require their respective environment configuration. `.env.example` lists the configuration surface without secrets.
+
+Regression tests cover auth state integrity, redirect validation, session scopes and revocation, access boundaries, checkout input, totals, reservation failures, promo-code limits, inline-update validation and delivery-quote cache isolation. They use isolated doubles for persistence; live database concurrency and external-provider behavior require integration validation against configured services.
 
 ## References
 
-- [Payload Next.js installation](https://payloadcms.com/docs/getting-started/installation)
+- [Payload custom components and component paths](https://payloadcms.com/docs/custom-components/overview)
 - [Payload collection configuration](https://payloadcms.com/docs/configuration/collections)
-- [FSD layers](https://feature-sliced.design/docs/reference/layers)
+- [FSD layers and dependency rules](https://feature-sliced.design/docs/reference/layers)

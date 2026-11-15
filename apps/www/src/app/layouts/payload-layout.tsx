@@ -7,12 +7,17 @@ import { importMap } from '../../../app/(payload)/admin/importMap.js';
 
 const serverFunction: ServerFunctionClient = async (args) => {
   'use server';
+
   return handleServerFunctions({ ...args, config, importMap });
 };
 
 export function PayloadLayout({ children }: { children: ReactNode }) {
   return (
-    <RootLayout config={config} importMap={importMap} serverFunction={serverFunction}>
+    <RootLayout
+      config={config}
+      importMap={importMap}
+      serverFunction={serverFunction}
+    >
       {children}
     </RootLayout>
   );

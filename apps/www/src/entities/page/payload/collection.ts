@@ -1,13 +1,100 @@
 import type { CollectionConfig } from 'payload';
-import { authenticatedCollectionAccess } from '@/shared/api/payload/access';
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
-  admin: { useAsTitle: 'title' },
-  access: authenticatedCollectionAccess('users'),
+
+  labels: {
+    singular: 'Page',
+    plural: 'Pages',
+  },
+
+  admin: {
+    group: 'Content',
+    useAsTitle: 'title',
+    defaultColumns: ['title', 'slug', 'status', 'updatedAt'],
+  },
+
+  access: {
+    create: ({ req: { user } }) => user?.collection === 'users',
+
+    read: ({ req: { user } }) => {
+      if (user?.collection === 'users') {
+        return true;
+      }
+
+      return {
+        status: {
+          equals: 'published',
+        },
+      };
+    },
+
+    update: ({ req: { user } }) => user?.collection === 'users',
+    delete: ({ req: { user } }) => user?.collection === 'users',
+  },
+
   fields: [
-    { name: 'title', type: 'text', required: true },
-    { name: 'slug', type: 'text', required: true, unique: true },
-    { name: 'content', type: 'textarea', label: 'Markdown' },
+    {
+      name: 'title',
+      type: 'text',
+      label: 'Название страницы',
+      required: true,
+      admin: {
+        description: 'Заголовок, который увидят посетители сайта.',
+      },
+    },
+    {
+      name: 'slug',
+      type: 'text',
+      label: 'Адрес страницы',
+      required: true,
+      unique: true,
+      index: true,
+      admin: {
+        description: 'Например: terms-of-use. Указывай без слэша в начале.',
+      },
+
+      validate: (value: unknown) => {
+        if (
+          typeof value !== 'string' ||
+          !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value)
+        ) {
+          return 'Используй строчные латинские буквы, цифры и дефисы.';
+        }
+
+        return true;
+      },
+    },
+    {
+      name: 'content',
+      type: 'code',
+      label: 'Содержимое',
+      required: true,
+      admin: {
+        language: 'markdown',
+        description:
+          'Текст страницы в формате Markdown. Главный заголовок берётся из поля «Название страницы».',
+      },
+    },
+    {
+      name: 'status',
+      type: 'select',
+      label: 'Статус',
+      required: true,
+      defaultValue: 'draft',
+      options: [
+        {
+          label: 'Черновик',
+          value: 'draft',
+        },
+        {
+          label: 'Опубликовано',
+          value: 'published',
+        },
+      ],
+      admin: {
+        position: 'sidebar',
+      },
+    },
   ],
 };

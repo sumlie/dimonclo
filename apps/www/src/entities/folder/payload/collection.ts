@@ -6,7 +6,5 @@ export const Folders: CollectionConfig = {
   admin: { useAsTitle: 'name' },
   folders: true,
   access: authenticatedCollectionAccess('users'),
-  fields: [
-    { name: 'name', type: 'text', required: true },
-  ],
+  fields: [{ name: 'name', type: 'text', required: true }],
 };

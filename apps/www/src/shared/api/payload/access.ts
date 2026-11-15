@@ -4,7 +4,8 @@ import type { Access, CollectionConfig } from 'payload';
 export function authenticatedCollectionAccess(
   authCollection: string,
 ): CollectionConfig['access'] {
-  const authenticated: Access = ({ req }) => req.user?.collection === authCollection;
+  const authenticated: Access = ({ req }) =>
+    req.user?.collection === authCollection;
 
   return {
     create: authenticated,
