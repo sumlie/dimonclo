@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { border } from './theme';
+import { BORDER, BORDER_FOCUS, BG, ERROR_COLOR, SUCCESS_COLOR } from './theme';
 
 export function NumberInput({
   id,
@@ -23,6 +23,7 @@ export function NumberInput({
   const [saved, setSaved] = useState(current);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(false);
+  const [focused, setFocused] = useState(false);
   const router = useRouter();
 
   async function save() {
@@ -30,7 +31,7 @@ export function NumberInput({
       return;
     }
 
-    const amount = Number(current);
+    const amount = Number(current.replace(',', '.'));
 
     if (
       !current.trim() ||
@@ -72,15 +73,14 @@ export function NumberInput({
   return (
     <span>
       <input
-        type="number"
-        step="any"
+        type="text"
+        inputMode="decimal"
         aria-label={fieldName}
         min={min}
         max={max}
         disabled={saving}
         value={current}
         onChange={(event) => setCurrent(event.target.value)}
-        onBlur={() => void save()}
         onKeyDown={(event) => {
           if (event.key === 'Enter') {
             event.preventDefault();
@@ -88,11 +88,25 @@ export function NumberInput({
           }
         }}
         style={{
-          width: 100,
-          border,
-          padding: 6,
-          background: 'var(--theme-input-bg)',
+          width: 76,
+          height: 26,
+          boxSizing: 'border-box',
+          border: `1px solid ${error ? ERROR_COLOR : focused ? BORDER_FOCUS : saved === current ? BORDER : SUCCESS_COLOR}`,
+          borderRadius: 4,
+          padding: '0 10px',
+          background: BG,
           color: 'inherit',
+          font: 'inherit',
+          fontSize: 13,
+          outline: 'none',
+        }}
+        onFocus={(event) => {
+          setFocused(true);
+          event.currentTarget.select();
+        }}
+        onBlur={() => {
+          setFocused(false);
+          void save();
         }}
       />
       {error && <span role="alert"> Не удалось сохранить</span>}

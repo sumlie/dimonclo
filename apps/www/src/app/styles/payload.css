@@ -1,0 +1,9 @@
+/*
+ * Payload owns the admin reset and component styles. Keep Tailwind's
+ * preflight disabled here so utility classes can be used without replacing
+ * Payload's visual language.
+ */
+@import 'tailwindcss/theme.css';
+@import 'tailwindcss/utilities.css';
+
+@source '../../';

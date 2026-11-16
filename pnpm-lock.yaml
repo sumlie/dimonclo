@@ -53,7 +53,7 @@ importers:
         version: 26.4.1
       eslint:
         specifier: 10.9.1
-        version: 10.9.1
+        version: 10.9.1(jiti@2.7.0)
       tsc-watch:
         specifier: 7.2.1
         version: 7.2.1(typescript@7.0.2)
@@ -68,7 +68,7 @@ importers:
         version: 4.0.0-beta.9(payload@4.0.0-beta.9(graphql@16.15.0)(typescript@7.0.2))
       '@payloadcms/next':
         specifier: 4.0.0-beta.9
-        version: 4.0.0-beta.9(@types/react@19.3.0)(graphql@16.15.0)(monaco-editor@0.57.0)(next@16.4.2(@types/node@26.4.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4))(payload@4.0.0-beta.9(graphql@16.15.0)(typescript@7.0.2))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@7.0.2)
+        version: 4.0.0-beta.9(@types/react@19.3.0)(graphql@16.15.0)(monaco-editor@0.57.0)(next@16.4.2(@babel/core@8.0.1)(@types/node@26.4.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4))(payload@4.0.0-beta.9(graphql@16.15.0)(typescript@7.0.2))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@7.0.2)
       '@payloadcms/ui':
         specifier: 4.0.0-beta.9
         version: 4.0.0-beta.9(@types/react@19.3.0)(monaco-editor@0.57.0)(payload@4.0.0-beta.9(graphql@16.15.0)(typescript@7.0.2))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@7.0.2)
@@ -83,7 +83,7 @@ importers:
         version: 6.2.12
       next:
         specifier: 16.4.2
-        version: 16.4.2(@types/node@26.4.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4)
+        version: 16.4.2(@babel/core@8.0.1)(@types/node@26.4.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4)
       payload:
         specifier: 4.0.0-beta.9
         version: 4.0.0-beta.9(graphql@16.15.0)(typescript@7.0.2)
@@ -120,7 +120,7 @@ importers:
         version: 19.3.0(@types/react@19.3.0)
       eslint:
         specifier: 10.9.1
-        version: 10.9.1
+        version: 10.9.1(jiti@2.7.0)
       tsx:
         specifier: 4.23.15
         version: 4.23.15
@@ -135,34 +135,34 @@ importers:
         version: 8.0.1
       '@babel/eslint-parser':
         specifier: 8.0.1
-        version: 8.0.1(@babel/core@8.0.1)(eslint@10.9.1)
+        version: 8.0.1(@babel/core@8.0.1)(eslint@10.9.1(jiti@2.7.0))
       '@babel/preset-typescript':
         specifier: 8.0.1
         version: 8.0.1(@babel/core@8.0.1)
       '@eslint/js':
         specifier: 10.0.1
-        version: 10.0.1(eslint@10.9.1)
+        version: 10.0.1(eslint@10.9.1(jiti@2.7.0))
       '@next/eslint-plugin-next':
         specifier: 16.3.4
-        version: 16.3.4(eslint@10.9.1)
+        version: 16.3.4(eslint@10.9.1(jiti@2.7.0))
       '@stylistic/eslint-plugin':
         specifier: 6.0.0
-        version: 6.0.0(eslint@10.9.1)
+        version: 6.0.0(eslint@10.9.1(jiti@2.7.0))
       eslint:
         specifier: 10.9.1
-        version: 10.9.1
+        version: 10.9.1(jiti@2.7.0)
       eslint-config-prettier:
         specifier: 10.1.8
-        version: 10.1.8(eslint@10.9.1)
+        version: 10.1.8(eslint@10.9.1(jiti@2.7.0))
       eslint-plugin-only-warn:
         specifier: 1.2.1
         version: 1.2.1
       eslint-plugin-react-hooks:
         specifier: 7.1.1
-        version: 7.1.1(eslint@10.9.1)
+        version: 7.1.1(eslint@10.9.1(jiti@2.7.0))
       eslint-plugin-turbo:
         specifier: 2.10.12
-        version: 2.10.12(eslint@10.9.1)(turbo@2.10.12)
+        version: 2.10.12(eslint@10.9.1(jiti@2.7.0))(turbo@2.10.12)
       globals:
         specifier: 17.12.0
         version: 17.12.0
@@ -195,7 +195,7 @@ importers:
         version: 19.2.5(@types/react@19.2.18)
       eslint:
         specifier: 10.9.1
-        version: 10.9.1
+        version: 10.9.1(jiti@2.7.0)
       typescript:
         specifier: 7.0.2
         version: 7.0.2
@@ -1220,8 +1220,8 @@ packages:
     resolution: {integrity: sha512-bRISgCIjP20/tbWSPWMEi54QVPRZExkuD9lJL+UIxUKtwVJA8wW1Trb1jMs1RFXo1CBTNZ/5hpC9QvmKWdopKw==}
     engines: {node: '>=6.0.0'}
 
-  '@jridgewell/sourcemap-codec@1.5.5':
-    resolution: {integrity: sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og==}
+  '@jridgewell/sourcemap-codec@1.6.0':
+    resolution: {integrity: sha512-T7jf+5zgsZHwNJ4lvQ7/aezbyk0nNX+zJVWpmHA7VYsEx7a7qr5Rg5IbtJFqkgze5Y2sruq1RUY8Q837Od7iFw==}
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
@@ -2231,6 +2231,10 @@ packages:
     resolution: {integrity: sha512-RKYVTCjAnRthyJes037NX/IiqeidgN1xc3j1RjFfECFp28A1GVwK9nA+i0rJPaHqSZwygLzRnFlzUuHFoWWy+Q==}
     engines: {node: '>=6'}
 
+  jiti@2.7.0:
+    resolution: {integrity: sha512-AC/7JofJvZGrrneWNaEnJeOLUx+JlGt7tNa0wZiRPT4MY1wmfKjt2+6O2p2uz2+skll8OZZmJMNqeke7kKbNgQ==}
+    hasBin: true
+
   jose@6.2.12:
     resolution: {integrity: sha512-9NiFmJEex0sy2Dk58j2UGBSHgUs2ypF9eZSu4L6vjOX3Dp96Sw1F3uL+H+D1sx02jZZdzUT0HgvCy59CuvXcWw==}
 
@@ -2752,6 +2756,10 @@ packages:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
 
+  source-map-js@1.2.2:
+    resolution: {integrity: sha512-KGj/8Y43x35aZVDtt+J4mK1hoLGHULMYfSkODJNQjNDC3oW1PqPoxMwo0pLUsWM/UEGzON/NxeHywEfNXNP3Vw==}
+    engines: {node: '>=0.10.0'}
+
   source-map-support@0.5.21:
     resolution: {integrity: sha512-uBHU3L3czsIyYXKX88fdrGovxdSCoTGDRZ6SYXtSRxLZUzHg5P/66Ht6uoUlHu9EZod+inXhKo3qQgwXUT/y1w==}
 
@@ -3055,10 +3063,10 @@ snapshots:
       obug: 2.1.4
       semver: 7.8.5
 
-  '@babel/eslint-parser@8.0.1(@babel/core@8.0.1)(eslint@10.9.1)':
+  '@babel/eslint-parser@8.0.1(@babel/core@8.0.1)(eslint@10.9.1(jiti@2.7.0))':
     dependencies:
       '@babel/core': 8.0.1
-      eslint: 10.9.1
+      eslint: 10.9.1(jiti@2.7.0)
       eslint-scope: 9.1.2
       eslint-visitor-keys: 5.0.1
       semver: 7.8.5
@@ -3611,14 +3619,14 @@ snapshots:
   '@esbuild/win32-x64@0.28.2':
     optional: true
 
-  '@eslint-community/eslint-utils@4.10.1(eslint@10.9.1)':
+  '@eslint-community/eslint-utils@4.10.1(eslint@10.9.1(jiti@2.7.0))':
     dependencies:
-      eslint: 10.9.1
+      eslint: 10.9.1(jiti@2.7.0)
       eslint-visitor-keys: 3.4.3
 
-  '@eslint-community/eslint-utils@4.9.1(eslint@10.9.1)':
+  '@eslint-community/eslint-utils@4.9.1(eslint@10.9.1(jiti@2.7.0))':
     dependencies:
-      eslint: 10.9.1
+      eslint: 10.9.1(jiti@2.7.0)
       eslint-visitor-keys: 3.4.3
 
   '@eslint-community/regexpp@4.12.2': {}
@@ -3639,9 +3647,9 @@ snapshots:
     dependencies:
       '@types/json-schema': 7.0.15
 
-  '@eslint/js@10.0.1(eslint@10.9.1)':
+  '@eslint/js@10.0.1(eslint@10.9.1(jiti@2.7.0))':
     optionalDependencies:
-      eslint: 10.9.1
+      eslint: 10.9.1(jiti@2.7.0)
 
   '@eslint/object-schema@3.0.5': {}
 
@@ -3820,7 +3828,7 @@ snapshots:
 
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
-      '@jridgewell/sourcemap-codec': 1.5.5
+      '@jridgewell/sourcemap-codec': 1.6.0
       '@jridgewell/trace-mapping': 0.3.31
 
   '@jridgewell/remapping@2.3.5':
@@ -3830,12 +3838,12 @@ snapshots:
 
   '@jridgewell/resolve-uri@3.1.2': {}
 
-  '@jridgewell/sourcemap-codec@1.5.5': {}
+  '@jridgewell/sourcemap-codec@1.6.0': {}
 
   '@jridgewell/trace-mapping@0.3.31':
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
-      '@jridgewell/sourcemap-codec': 1.5.5
+      '@jridgewell/sourcemap-codec': 1.6.0
 
   '@jsdevtools/ono@7.1.3': {}
 
@@ -3878,9 +3886,9 @@ snapshots:
 
   '@next/env@16.4.2': {}
 
-  '@next/eslint-plugin-next@16.3.4(eslint@10.9.1)':
+  '@next/eslint-plugin-next@16.3.4(eslint@10.9.1(jiti@2.7.0))':
     dependencies:
-      '@eslint-community/eslint-utils': 4.9.1(eslint@10.9.1)
+      '@eslint-community/eslint-utils': 4.9.1(eslint@10.9.1(jiti@2.7.0))
       fast-glob: 3.3.1
     transitivePeerDependencies:
       - eslint
@@ -4015,7 +4023,7 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@payloadcms/next@4.0.0-beta.9(@types/react@19.3.0)(graphql@16.15.0)(monaco-editor@0.57.0)(next@16.4.2(@types/node@26.4.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4))(payload@4.0.0-beta.9(graphql@16.15.0)(typescript@7.0.2))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@7.0.2)':
+  '@payloadcms/next@4.0.0-beta.9(@types/react@19.3.0)(graphql@16.15.0)(monaco-editor@0.57.0)(next@16.4.2(@babel/core@8.0.1)(@types/node@26.4.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4))(payload@4.0.0-beta.9(graphql@16.15.0)(typescript@7.0.2))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(typescript@7.0.2)':
     dependencies:
       '@dnd-kit/core': 6.3.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@dnd-kit/modifiers': 9.0.0(@dnd-kit/core@6.3.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)
@@ -4029,7 +4037,7 @@ snapshots:
       graphql: 16.15.0
       graphql-http: 1.22.4(graphql@16.15.0)
       graphql-playground-html: 1.6.30
-      next: 16.4.2(@types/node@26.4.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4)
+      next: 16.4.2(@babel/core@8.0.1)(@types/node@26.4.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4)
       path-to-regexp: 6.3.0
       payload: 4.0.0-beta.9(graphql@16.15.0)(typescript@7.0.2)
       qs-esm: 8.0.1
@@ -4092,15 +4100,15 @@ snapshots:
 
   '@standard-schema/spec@1.1.0': {}
 
-  '@stylistic/eslint-plugin@6.0.0(eslint@10.9.1)':
+  '@stylistic/eslint-plugin@6.0.0(eslint@10.9.1(jiti@2.7.0))':
     dependencies:
-      '@eslint-community/eslint-utils': 4.10.1(eslint@10.9.1)
+      '@eslint-community/eslint-utils': 4.10.1(eslint@10.9.1(jiti@2.7.0))
       '@typescript-eslint/types': 8.72.2
       '@typescript-eslint/visitor-keys': 8.72.2
       espree: 11.2.0
       picomatch: 4.0.7
     optionalDependencies:
-      eslint: 10.9.1
+      eslint: 10.9.1(jiti@2.7.0)
 
   '@swc/helpers@0.5.23':
     dependencies:
@@ -4547,27 +4555,27 @@ snapshots:
 
   escape-string-regexp@4.0.0: {}
 
-  eslint-config-prettier@10.1.8(eslint@10.9.1):
+  eslint-config-prettier@10.1.8(eslint@10.9.1(jiti@2.7.0)):
     dependencies:
-      eslint: 10.9.1
+      eslint: 10.9.1(jiti@2.7.0)
 
   eslint-plugin-only-warn@1.2.1: {}
 
-  eslint-plugin-react-hooks@7.1.1(eslint@10.9.1):
+  eslint-plugin-react-hooks@7.1.1(eslint@10.9.1(jiti@2.7.0)):
     dependencies:
       '@babel/core': 7.29.7
       '@babel/parser': 7.29.8
-      eslint: 10.9.1
+      eslint: 10.9.1(jiti@2.7.0)
       hermes-parser: 0.25.1
       zod: 4.6.7
       zod-validation-error: 4.0.2(zod@4.6.7)
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-turbo@2.10.12(eslint@10.9.1)(turbo@2.10.12):
+  eslint-plugin-turbo@2.10.12(eslint@10.9.1(jiti@2.7.0))(turbo@2.10.12):
     dependencies:
       dotenv: 16.0.3
-      eslint: 10.9.1
+      eslint: 10.9.1(jiti@2.7.0)
       turbo: 2.10.12
 
   eslint-scope@9.1.2:
@@ -4581,9 +4589,9 @@ snapshots:
 
   eslint-visitor-keys@5.0.1: {}
 
-  eslint@10.9.1:
+  eslint@10.9.1(jiti@2.7.0):
     dependencies:
-      '@eslint-community/eslint-utils': 4.9.1(eslint@10.9.1)
+      '@eslint-community/eslint-utils': 4.9.1(eslint@10.9.1(jiti@2.7.0))
       '@eslint-community/regexpp': 4.12.2
       '@eslint/config-array': 0.23.5
       '@eslint/config-helpers': 0.7.0
@@ -4613,6 +4621,8 @@ snapshots:
       minimatch: 10.2.6
       natural-compare: 1.4.0
       optionator: 0.9.4
+    optionalDependencies:
+      jiti: 2.7.0
     transitivePeerDependencies:
       - supports-color
 
@@ -4827,6 +4837,9 @@ snapshots:
 
   iterare@1.2.1: {}
 
+  jiti@2.7.0:
+    optional: true
+
   jose@6.2.12: {}
 
   joycon@3.1.1: {}
@@ -4930,7 +4943,7 @@ snapshots:
 
   natural-compare@1.4.0: {}
 
-  next@16.4.2(@types/node@26.4.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4):
+  next@16.4.2(@babel/core@8.0.1)(@types/node@26.4.1)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(sass@1.77.4):
     dependencies:
       '@next/env': 16.4.2
       '@swc/helpers': 0.5.23
@@ -4939,7 +4952,7 @@ snapshots:
       postcss: 8.5.23
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
-      styled-jsx: 5.1.6(react@19.3.1)
+      styled-jsx: 5.1.6(@babel/core@8.0.1)(react@19.3.1)
     optionalDependencies:
       '@next/swc-darwin-arm64': 16.4.2
       '@next/swc-darwin-x64': 16.4.2
@@ -5291,7 +5304,7 @@ snapshots:
     dependencies:
       chokidar: 3.6.0
       immutable: 4.3.9
-      source-map-js: 1.2.1
+      source-map-js: 1.2.2
 
   sax@1.6.1: {}
 
@@ -5364,6 +5377,8 @@ snapshots:
 
   source-map-js@1.2.1: {}
 
+  source-map-js@1.2.2: {}
+
   source-map-support@0.5.21:
     dependencies:
       buffer-from: 1.1.2
@@ -5395,10 +5410,12 @@ snapshots:
     dependencies:
       '@tokenizer/token': 0.3.0
 
-  styled-jsx@5.1.6(react@19.3.1):
+  styled-jsx@5.1.6(@babel/core@8.0.1)(react@19.3.1):
     dependencies:
       client-only: 0.0.1
       react: 19.3.1
+    optionalDependencies:
+      '@babel/core': 8.0.1
 
   stylis@4.2.0: {}
 
