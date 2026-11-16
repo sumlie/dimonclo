@@ -3,7 +3,7 @@ import { authenticatedCollectionAccess } from '@/shared/api/payload/access';
 
 export const Folders: CollectionConfig = {
   slug: 'folders',
-  admin: { useAsTitle: 'name' },
+  admin: { useAsTitle: 'name', group: false },
   folders: true,
   access: authenticatedCollectionAccess('users'),
   fields: [{ name: 'name', type: 'text', required: true }],

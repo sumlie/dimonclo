@@ -23,6 +23,7 @@ apps/www/
       migrations/              Reviewed database migrations
     views/
       home/
+      order/                   Payload order detail and statistics views
     features/
       auth/                    Login, linking, onboarding, logout, profile HTTP API
       checkout/                Transaction orchestration, delivery and totals
@@ -41,14 +42,10 @@ apps/www/
         cdek/                  External delivery client and quote cache
         notifications/         External order notification transport
         oauth/                 Google/Yandex clients and Telegram verification
-        order-admin/           Order admin data access helpers
-        order-statistics/      Order statistics data access
         payload/               Request bootstrap, field endpoints and access helpers
         payload-types.ts       Generated schema types
       config/auth.ts           Provider, origin, cookie and secret configuration
-      lib/                     Focused formatting, order presentation, status and auth-error utilities
-      ui/order-admin/          Order admin view components
-      ui/order-statistics/     Order statistics view components
+      lib/                     Focused formatting, status and auth-error utilities
       ui/payload/              Reusable CMS controls and presentation primitives
 ```
 

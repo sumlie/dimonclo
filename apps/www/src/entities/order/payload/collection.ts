@@ -50,7 +50,7 @@ export const Orders: CollectionConfig = {
       views: {
         edit: {
           root: {
-            Component: '/src/shared/ui/order-admin/order-view',
+            Component: '/src/views/order/payload/order-detail/order-view',
           },
         },
       },

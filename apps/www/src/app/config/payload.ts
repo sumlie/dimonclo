@@ -25,10 +25,12 @@ export default buildConfig({
   admin: {
     user: Users.slug,
     components: {
-      afterNavLinks: ['/src/shared/ui/order-statistics/navigation'],
+      beforeNav: ['/src/shared/ui/payload/reset-sidebar-tab'],
+      afterNavLinks: ['/src/views/order/payload/order-statistic/navigation'],
       views: {
         orderStatistics: {
-          Component: '/src/shared/ui/order-statistics/order-statistics',
+          Component:
+            '/src/views/order/payload/order-statistic/order-statistics',
           path: '/order-statistic',
         },
       },
